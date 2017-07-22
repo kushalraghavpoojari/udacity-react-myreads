@@ -12,7 +12,7 @@ class MainPage extends Component {
   }
 
   render() {
-    const { books } = this.props
+    const { books} = this.props
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -27,7 +27,7 @@ class MainPage extends Component {
                 {
                   books.filter((book) => (book.shelf === 'currentlyReading')).map((book) => (
                     <div key={book.id}>
-                      <Book book={book} update={this.props.onUpdateBook}/>
+                      <Book book={book} update={this.props.onUpdateBook} />
                     </div>
                   ))
                 }

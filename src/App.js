@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route, history } from 'react-router-dom'
+import { Route} from 'react-router-dom'
 import Search from './SearchPage'
 import MainPage from './MainPage'
 
@@ -16,7 +16,9 @@ class BooksApp extends React.Component {
     })
   }
 
-  updateBook = (book,shelf) => {
+
+
+  updateBook = (updatedBook,shelf) => {
     // BooksAPI.update(book, shelf).then(books => {
     //   Object.keys(books).forEach((key)  =>{
     //     books[key].map((book) => {
@@ -27,19 +29,13 @@ class BooksApp extends React.Component {
     //     })
     //   })
     // })
-    console.log('test')
-    BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books => {
-        this.setState({books})
-      })
+    updatedBook.shelf = shelf
+    this.setState((state) => {
+      books: state.books.filter(
+        (book) => book.id !== updatedBook.id).concat([updatedBook])
     })
+    BooksAPI.update({id: updatedBook.id}, shelf)
   }
-
-  // searchBook = (query) => {
-  //   if(query.trim() !== '') {
-  //     BooksAPI.search(query, 20).then(books => this.setState({books})).catch(error => console.error(error))
-  //   }
-  // }
 
   render() {
     if(!this.state.books.length) {
@@ -49,7 +45,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={() => (
           <MainPage books={this.state.books}
-            onUpdateBook={this.updateBook}/>
+            onUpdateBook={this.updateBook} />
         )}/>
         <Route exact path='/search' render={() => (
           <Search onUpdateBook={this.updateBook} books={this.state.books}/>

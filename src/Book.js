@@ -3,6 +3,7 @@ import './App.css'
 import PropTypes from 'prop-types'
 
 class Book extends Component {
+
   static propTypes = {
     book: PropTypes.object.isRequired,
     update: PropTypes.func.isRequired
@@ -10,7 +11,6 @@ class Book extends Component {
 
   render () {
     const {book, update} = this.props
-    console.log(book)
     return (
       <li key={book.id}>
         <div className="book">

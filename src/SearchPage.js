@@ -19,7 +19,15 @@ class Search extends Component {
   searchBooks = () => {
     BooksAPI.search(this.state.query).then((books) => {
       if(Array.isArray(books)) {
-        this.setState({bookSearch: books.concat(this.props.books)})
+        let updatedBook = books.map((book) => {
+          this.props.books.forEach((oldBook) => {
+            if(oldBook.id === book.id) {
+              book.shelf = oldBook.shelf
+            }
+          })
+          return book
+        })
+        this.setState({bookSearch: updatedBook})
       } else {
         this.setState({bookSearch: []})
       }
@@ -28,30 +36,20 @@ class Search extends Component {
 
 
   componentWillMount() {
-    this.setState({bookSearch: this.props.books})
+    this.setState({bookSearch: []})
     this.delayFetch = _.debounce(this.searchBooks, 500)
   }
 
   render () {
     const {bookSearch, query} = this.state
-    const {onUpdateBook, books} = this.props
-    // //console.log(books)
-    // let showingBooks
-    // if(query) {
-    //   let match = new RegExp(escapeRegExp(query, 'i'))
-    //   console.log(this.state.bookSearch)
-    //   let tempBooks = this.state.bookSearch.filter(book=>match.test(book.title) || match.test(book.author))
-    //   showingBooks = tempBooks ? tempBooks : books
-    // } else {
-    //   showingBooks = books
-    //console.log(this.state.bookSearch)
-    // }
+    const {onUpdateBook} = this.props
+
     return (
-      <div className="search-books">
+      <div className="search-books root">
         <div className="search-books-bar">
           <Link to="/" className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" placeholder="Search by title or author" value={this.state.query}
+            <input type="text" placeholder="Search by title or author" value={query}
                   onChange={(event) => this.updateQuery(event.target.value)}/>
           </div>
         </div>
