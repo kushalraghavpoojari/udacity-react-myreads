@@ -19,22 +19,14 @@ class BooksApp extends React.Component {
 
 
   updateBook = (updatedBook,shelf) => {
-    // BooksAPI.update(book, shelf).then(books => {
-    //   Object.keys(books).forEach((key)  =>{
-    //     books[key].map((book) => {
-    //       BooksAPI.get(book).then((book) => {
-    //         this.setState(state => {state.books.concat([book])})
-    //         console.log(this.state.books)
-    //       })
-    //     })
-    //   })
-    // })
     updatedBook.shelf = shelf
-    this.setState((state) => {
+    this.setState((state) => ({
       books: state.books.filter(
         (book) => book.id !== updatedBook.id).concat([updatedBook])
+    }))
+    BooksAPI.update({id: updatedBook.id}, shelf).then(()=>{
+      BooksAPI.getAll()
     })
-    BooksAPI.update({id: updatedBook.id}, shelf)
   }
 
   render() {

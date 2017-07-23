@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 import _ from 'lodash'
-//import escapeRegExp from 'escape-string-regexp'
 
 class Search extends Component {
   state = {
@@ -21,8 +20,10 @@ class Search extends Component {
       if(Array.isArray(books)) {
         let updatedBook = books.map((book) => {
           this.props.books.forEach((oldBook) => {
-            if(oldBook.id === book.id) {
+            if((oldBook.id === book.id) && (oldBook.title === book.title)) {
               book.shelf = oldBook.shelf
+            } else {
+              book.shelf = 'none'
             }
           })
           return book
