@@ -1,4 +1,5 @@
-This is the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+A final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of the project is to create a web application that allows to
+select and categorize books you have read, are currently reading, or want to read.The project emphasizes using React to build the application and provides an API server and client library that is used to persist information as you interact with the application.
 
 ## Technologies Used:
 ---
@@ -11,9 +12,21 @@ This is the starter template for the final assessment project for Udacity's Reac
 ### How to run the application
 
 ```
+Clone the repository using 
+
+$ git clone https://github.com/kushalraghavpoojari/udacity-react-myreads.git
+
+change the current working directory
+
+$ cd udacity-react-myreads
+
+Install dependencies
+
 $ npm install
 
-$ npm start 
+Start the server and serve the application
+
+$ npm start
 
 ```
 

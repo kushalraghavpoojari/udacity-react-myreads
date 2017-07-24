@@ -2,7 +2,6 @@ const shelves = [
   {
     id: 'currentlyReading',
     title: 'Currently Reading'
-
   },
   {
     id: 'wantToRead',
@@ -11,7 +10,7 @@ const shelves = [
   {
     id: 'read',
     title: 'Read'
-  },
+  }
 ]
 
 export default shelves
