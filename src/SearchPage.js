@@ -15,19 +15,34 @@ class Search extends Component {
     this.delayFetch()
   }
 
+  getUniqueBooks = (books) => {
+    const bookIds = new Set()
+    const uniqueBooks = []
+    books.forEach((book) => {
+      if(!bookIds.has(book.id)) {
+        uniqueBooks.push(book)
+        bookIds.add(book.id)
+      }
+    })
+    return uniqueBooks
+  }
+
+  checkShelf = (books) => {
+    const bookIds = new Set(this.props.books.map((book) => book.id))
+    return books.map((book) => {
+      if (bookIds.has(book.id)) {
+        return this.props.books.find((propBook) => propBook.id === book.id)
+      } else {
+        book.shelf = "none"
+        return book
+      }
+    })
+  }
+
   searchBooks = () => {
     BooksAPI.search(this.state.query).then((books) => {
       if(Array.isArray(books)) {
-        let updatedBook = books.map((book) => {
-          this.props.books.forEach((oldBook) => {
-            if((oldBook.id === book.id) && (oldBook.title === book.title)) {
-              book.shelf = oldBook.shelf
-            } else {
-              book.shelf = 'none'
-            }
-          })
-          return book
-        })
+        let updatedBook = this.checkShelf(this.getUniqueBooks(books))
         this.setState({bookSearch: updatedBook})
       } else {
         this.setState({bookSearch: []})
